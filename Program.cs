@@ -6,10 +6,8 @@ using DotNetEnv;
 Env.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
 
 List<FlightVariant> flightVariants = [];
-flightVariants.Add(new FlightVariant("HRG", "MOW", 1, 19, 19, 8, 30000));
-
-// flightVariants.Add(new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 25000));
-// flightVariants.Add(new FlightVariant("HRG", "MOW", 1, 15, 20, 8, 30000));
+flightVariants.Add(new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 25000));
+flightVariants.Add(new FlightVariant("HRG", "MOW", 1, 15, 20, 8, 30000));
 
 List<FlightInfo> infoToParse = [];
 
