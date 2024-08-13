@@ -16,7 +16,7 @@ namespace LoukosterParser
         private static readonly string botToken = Env.GetString("TELEGRAM_BOT_TOKEN") ?? throw new ArgumentNullException("TELEGRAM_BOT_TOKEN");
         private readonly TelegramBotClient BotClient = new(botToken);
 
-        private async Task<decimal> GetPrice(IElementHandle buyButtonElement)
+        static private async Task<decimal> GetPrice(IElementHandle buyButtonElement)
         {
             var priceElement = await buyButtonElement.QuerySelectorAsync(".ticket-action-button-deeplink-text__price--not-mobile");
             if(priceElement is null) return 0;
@@ -25,7 +25,7 @@ namespace LoukosterParser
             return priceIsParsed ? price : 0;
         }
 
-        private async Task<string> GetId(IElementHandle buyButtonElement)
+        static private async Task<string> GetId(IElementHandle buyButtonElement)
         {
             string? id = await buyButtonElement.GetAttributeAsync("href");
             if (id is null) return "id not found";
@@ -68,7 +68,7 @@ namespace LoukosterParser
                 {
                     decimal price = await GetPrice(buyButtonElement);
 
-                    if (price > flightInfo.MaxPrice) continue;
+                    if (price == 0 || price > flightInfo.MaxPrice) continue;
 
                     string id = await GetId(buyButtonElement);
 
