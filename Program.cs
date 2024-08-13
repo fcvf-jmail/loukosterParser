@@ -24,19 +24,20 @@ foreach (FlightVariant flightVariant in flightVariants)
 
 using var pw = await Playwright.CreateAsync();
 
+const int timeoutInMinutes = 10;
+string cronExpression = $"*/{timeoutInMinutes} * * * *"; // Каждые 10 минут
+CrontabSchedule schedule = CrontabSchedule.Parse(cronExpression);
+DateTime nextRun = schedule.GetNextOccurrence(DateTime.Now);
 
-var cronExpression = "*/1 * * * *"; // Каждые 10 минут
-var schedule = CrontabSchedule.Parse(cronExpression);
-var nextRun = schedule.GetNextOccurrence(DateTime.Now);
-var timer = new Timer(async _ =>
+Timer timer = new (async _ =>
 {
     await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{Headless=true});
-    var page = await browser.NewPageAsync();
+    IPage page = await browser.NewPageAsync();
     Parser parser = new(page, infoToParse);
     await parser.Parse();
     await browser.CloseAsync();
     nextRun = schedule.GetNextOccurrence(DateTime.Now);
-}, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+}, null, TimeSpan.Zero, TimeSpan.FromMinutes(timeoutInMinutes));
 
 Console.WriteLine("Press [Enter] to exit.");
 Console.ReadLine();
