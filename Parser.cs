@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using dotenv.net;
+using DotNetEnv;
 using Microsoft.Playwright;
 
 namespace LoukosterParser
@@ -13,7 +13,7 @@ namespace LoukosterParser
     {
         private IPage Page { get; set; } = page;
         private List<FlightInfo> InfoToParse { get; set; } = infoToParse;
-        private static readonly string botToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN") ?? throw new ArgumentNullException("TELEGRAM_BOT_TOKEN");
+        private static readonly string botToken = Env.GetString("TELEGRAM_BOT_TOKEN") ?? throw new ArgumentNullException("TELEGRAM_BOT_TOKEN");
         private readonly TelegramBotClient BotClient = new(botToken);
 
         private async Task<decimal> GetPrice(IElementHandle buyButtonElement)

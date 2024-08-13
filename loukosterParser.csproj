@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotenv.net" Version="3.2.0" />
+    <PackageReference Include="DotNetEnv" Version="3.1.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.46.0" />
     <PackageReference Include="NCrontab" Version="3.3.3" />
     <PackageReference Include="Telegram.Bot" Version="19.0.0" />

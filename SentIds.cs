@@ -2,7 +2,7 @@ namespace LoukosterParser;
 
 public static class SentIds
 {
-    private const string FilePath = "sent_ids.txt";
+    private static readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(), "sent_ids.txt");
     public static HashSet<string> Get()
     {
         var ids = new HashSet<string>();

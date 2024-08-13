@@ -1,6 +1,9 @@
 ﻿using Microsoft.Playwright;
 using LoukosterParser;
 using NCrontab;
+using DotNetEnv;
+
+Env.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
 
 List<FlightVariant> flightVariants = [];
 flightVariants.Add(new FlightVariant("HRG", "MOW", 1, 19, 19, 8, 30000));
