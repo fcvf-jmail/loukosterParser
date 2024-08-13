@@ -19,8 +19,13 @@ namespace LoukosterParser
         static private async Task<decimal> GetPrice(IElementHandle buyButtonElement)
         {
             var priceElement = await buyButtonElement.QuerySelectorAsync(".ticket-action-button-deeplink-text__price--not-mobile");
-            if(priceElement is null) return 0;
+            if(priceElement is null)
+            {
+                Console.WriteLine("Не удалось найти priceElement");
+                return 0;
+            }
             string priceStr = await priceElement.InnerTextAsync();
+            Console.WriteLine($"Нашел priceStr: ${priceStr}");
             bool priceIsParsed = decimal.TryParse(priceStr, out decimal price);
             return priceIsParsed ? price : 0;
         }
