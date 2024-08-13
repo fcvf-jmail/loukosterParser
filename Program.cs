@@ -30,7 +30,7 @@ var schedule = CrontabSchedule.Parse(cronExpression);
 var nextRun = schedule.GetNextOccurrence(DateTime.Now);
 var timer = new Timer(async _ =>
 {
-    await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{Headless=false});
+    await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{Headless=true});
     var page = await browser.NewPageAsync();
     Parser parser = new(page, infoToParse);
     await parser.Parse();
