@@ -48,11 +48,15 @@ namespace LoukosterParser
             foreach (FlightInfo flightInfo in InfoToParse)
             {
                 await Page.GotoAsync(flightInfo.Url);
+
+                Console.WriteLine($"Открыл ссылку {flightInfo.Url}, жду загрузки прогресс бара");
                 
                 await Page.WaitForSelectorAsync("div.search_progressbar-container", new PageWaitForSelectorOptions
                 {
                     State = WaitForSelectorState.Hidden
                 });
+
+                Console.WriteLine("Прогресс бар загрузился, нажимаю кнопку фильтрации по багажу");
 
                 var withBaggageButton = await Page.QuerySelectorAsync("#baggage_filter_0");
                                 
@@ -60,21 +64,31 @@ namespace LoukosterParser
 
                 await withBaggageButton.ClickAsync(new ElementHandleClickOptions { Force = true });
 
-                await Page.ScreenshotAsync(new PageScreenshotOptions{Path=Path.Combine(Directory.GetCurrentDirectory(), "screen.png")});
+                Console.WriteLine("Нажал кнопку, делаю скриншот");
+
+                await Page.ScreenshotAsync(new PageScreenshotOptions{Path=Path.Combine(Directory.GetCurrentDirectory(), "screen.png"), FullPage=true});
                 
+                Console.WriteLine("Сделал скриншот");
+
                 var buyButtonElements = await Page.QuerySelectorAllAsync(".ticket-action-button-deeplink--");
 
                 foreach (var buyButtonElement in buyButtonElements)
                 {
                     decimal price = await GetPrice(buyButtonElement);
 
+                    Console.WriteLine($"Нашел цену {price}");
+
                     if (price == 0 || price > flightInfo.MaxPrice) continue;
 
                     string id = await GetId(buyButtonElement);
 
                     if (id == "id not found" || sentIds.Contains(id)) continue;
+                    
+                    Console.WriteLine($"Нашел id {id} для цены ${price}");
 
                     await SendAlert(1386450473, $"<i>Найден подходящий билет</i>\nЦена: <b>{price}</b>\n<a href=\"{flightInfo.Url}\">Тык</a>");
+                    
+                    Console.WriteLine($"Отправил алерт в тг");
 
                     sentIds.Add(id);
                     SentIds.Write(sentIds);
