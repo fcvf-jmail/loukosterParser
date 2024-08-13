@@ -6,7 +6,7 @@ using DotNetEnv;
 Env.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
 
 List<FlightVariant> flightVariants = [];
-flightVariants.Add(new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 25000));
+flightVariants.Add(new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 30000));
 flightVariants.Add(new FlightVariant("HRG", "MOW", 1, 15, 20, 8, 30000));
 
 List<FlightInfo> infoToParse = [];
@@ -20,7 +20,6 @@ foreach (FlightVariant flightVariant in flightVariants)
     }
 }
 
-using var pw = await Playwright.CreateAsync();
 
 const int timeoutInMinutes = 10;
 string cronExpression = $"*/{timeoutInMinutes} * * * *"; // Каждые 10 минут
@@ -29,6 +28,7 @@ DateTime nextRun = schedule.GetNextOccurrence(DateTime.Now);
 
 Timer timer = new (async _ =>
 {
+    using var pw = await Playwright.CreateAsync();
     await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{Headless=true});
     IPage page = await browser.NewPageAsync();
     Parser parser = new(page, infoToParse);
