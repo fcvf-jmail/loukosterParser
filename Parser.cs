@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using DotNetEnv;
 using Microsoft.Playwright;
+using System.Text.RegularExpressions;
 
 namespace LoukosterParser
 {
@@ -26,7 +27,9 @@ namespace LoukosterParser
             }
             string priceStr = await priceElement.InnerTextAsync();
             Console.WriteLine($"Нашел priceStr: ${priceStr}");
-            bool priceIsParsed = decimal.TryParse(priceStr, out decimal price);
+            string priceWithOnlyDigits = Regex.Replace(priceStr, @"\D", "");
+            Console.WriteLine($"Убрал все не цифры: ${priceWithOnlyDigits}");
+            bool priceIsParsed = decimal.TryParse(priceWithOnlyDigits, out decimal price);
             return priceIsParsed ? price : 0;
         }
 
