@@ -7,8 +7,8 @@ Env.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
 
 List<FlightVariant> flightVariants =
 [
-    // new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 30000),
-    // new FlightVariant("HRG", "MOW", 1, 15, 20, 8, 30000)
+    new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 30000),
+    new FlightVariant("HRG", "MOW", 1, 15, 20, 8, 30000)
 ];
 
 List<FlightInfo> infoToParse = [];
