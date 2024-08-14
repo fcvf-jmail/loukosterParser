@@ -9,7 +9,6 @@ class FlightInfo (string url, decimal maxPrice)
 {
     public string Url { get; private set; } = url;
     public decimal MaxPrice { get; private set; } = maxPrice;
-
     private static readonly string botToken = Env.GetString("TELEGRAM_BOT_TOKEN") ?? throw new ArgumentNullException("TELEGRAM_BOT_TOKEN");
     private readonly TelegramBotClient BotClient = new(botToken);
 
@@ -114,7 +113,7 @@ class FlightInfo (string url, decimal maxPrice)
         sentIds.Add(id);
         SentIds.Write(sentIds);
     }
-    
+
     public async Task Parse(IPage page)
     {
         await page.GotoAsync(Url);

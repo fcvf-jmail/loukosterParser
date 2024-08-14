@@ -29,7 +29,8 @@ CrontabSchedule schedule = CrontabSchedule.Parse(cronExpression);
 Timer timer = new (async _ =>
 {
     using var pw = await Playwright.CreateAsync();
-    await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false });
+    bool headless = Env.GetBool("BROWSER_HEADLESS");
+    await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = headless });
     
     IPage page = await browser.NewPageAsync(new BrowserNewPageOptions { ViewportSize = new ViewportSize { Width = 1920, Height = 1080 } });
     
