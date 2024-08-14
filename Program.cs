@@ -7,7 +7,6 @@ Env.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
 
 List<FlightVariant> flightVariants =
 [
-    new FlightVariant("HRG", "MOW", 1, 18, 18, 8, 40000), // Test
     // new FlightVariant("CAI", "MOW", 1, 15, 20, 8, 30000),
     // new FlightVariant("HRG", "MOW", 1, 15, 20, 8, 30000)
 ];
