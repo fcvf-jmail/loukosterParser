@@ -37,5 +37,7 @@ Timer timer = new (async _ =>
     nextRun = schedule.GetNextOccurrence(DateTime.Now);
 }, null, TimeSpan.Zero, TimeSpan.FromMinutes(timeoutInMinutes));
 
-Console.WriteLine("Press [Enter] to exit.");
-Console.ReadLine();
+while (true)
+{
+    Thread.Sleep(Timeout.Infinite);
+}
