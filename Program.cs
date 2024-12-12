@@ -31,9 +31,9 @@ Timer timer = new (async _ =>
     using var pw = await Playwright.CreateAsync();
     bool headless = Env.GetBool("BROWSER_HEADLESS");
     await using var browser = await pw.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = headless });
-    
+
     IPage page = await browser.NewPageAsync(new BrowserNewPageOptions { ViewportSize = new ViewportSize { Width = 1920, Height = 1080 } });
-    
+
     Parser parser = new(page, infoToParse);
     await parser.Parse();
 
